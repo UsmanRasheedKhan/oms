@@ -9,6 +9,7 @@ import { subscribeToOrders, seedDemoOrders } from "@/lib/orders";
 import type { Order, OrderStatus } from "@/lib/types";
 import { STATUS_LABELS } from "@/lib/types";
 import { Plus, RefreshCw, Package, TrendingUp, Truck, CheckCircle2 } from "lucide-react";
+import { useUIStore } from "@/store/useUIStore";
 
 type TabStatus = "new" | "in_process" | "shipped" | "delivered" | "returned";
 
@@ -36,9 +37,10 @@ function StatCard({ label, value, icon: Icon, accent }: {
   );
 }
 
-function formatPKR(n: number) {
-  if (n >= 1000) return `PKR ${(n / 1000).toFixed(1)}k`;
-  return `PKR ${n}`;
+function formatCurrency(n: number, currencyCode: string) {
+  const sym = currencyCode === 'USD' ? '$' : 'PKR';
+  if (n >= 1000) return `${sym} ${(n / 1000).toFixed(1)}k`;
+  return `${sym} ${n}`;
 }
 
 export default function DashboardPage() {
@@ -47,6 +49,7 @@ export default function DashboardPage() {
   const [allOrders, setAllOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [seeding, setSeeding] = useState(false);
+  const currency = useUIStore((state) => state.currency);
 
   // Subscribe to active tab orders
   useEffect(() => {
@@ -112,7 +115,9 @@ export default function DashboardPage() {
             <StatCard label="Pending" value={stats.new} icon={Package} />
             <StatCard label="In Transit" value={stats.shipped} icon={Truck} />
             <StatCard label="Delivered" value={stats.delivered} icon={CheckCircle2} />
-            <StatCard label="Revenue" value={formatPKR(stats.revenue)} icon={TrendingUp} accent />
+            <StatCard label="Products" value={42} icon={Package} />
+            <StatCard label="Inv Value" value={`${currency === 'USD' ? '$' : 'PKR'} 2.5k`} icon={TrendingUp} accent />
+            <StatCard label="Revenue" value={formatCurrency(stats.revenue, currency)} icon={TrendingUp} accent />
           </div>
         </div>
 

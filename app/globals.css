@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
-/* ── Luxury Design Tokens ── */
+/* ── Luxury Design Tokens (Architectural Zen) ── */
 :root {
-  --obsidian: #0B0B0B;
+  --obsidian: #000000;
   --chalk: #FFFFFF;
-  --slate: #F8F9FA;
+  --slate: #FBFBFB;
   --slate-mid: #E9ECEF;
   --muted: #6B7280;
   --muted-light: #9CA3AF;
-  --accent: #C9A96E;
-  --accent-light: #E8D5B0;
+  --accent: #D4AF37;
+  --accent-light: #F3E5AB;
   --border: #E5E7EB;
   --border-strong: #D1D5DB;
 
@@ -55,6 +55,10 @@ body {
 /* ── Typography ── */
 .font-display {
   font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-mono {
+  font-family: 'Geist Mono', monospace;
 }
 
 h1,
@@ -137,6 +141,7 @@ h3,
   outline: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   -webkit-appearance: none;
+  appearance: none;
 }
 
 .input-luxury:focus {
@@ -383,5 +388,38 @@ h3,
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ── Print Styles (Professional Stationery) ── */
+@media print {
+  @page {
+    margin: 20mm;
+    size: A4;
+  }
+
+  body {
+    background-color: transparent !important;
+    color: #000 !important;
+  }
+
+  .print-hidden,
+  nav,
+  header,
+  button,
+  .btn {
+    display: none !important;
+  }
+
+  .card-luxury {
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+  }
+
+  .input-luxury {
+    border: none !important;
+    padding: 0 !important;
+    background: transparent !important;
   }
 }

@@ -2,19 +2,25 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useUIStore } from "@/store/useUIStore";
 import {
     LayoutDashboard,
     Plus,
     Users,
     BarChart3,
     Package,
+    Settings,
+    TrendingUp
 } from "lucide-react";
 
 const navItems = [
     { href: "/", icon: LayoutDashboard, label: "Dashboard" },
     { href: "/orders/new", icon: Plus, label: "New Order" },
     { href: "/customers", icon: Users, label: "Customers" },
-    { href: "/reports", icon: BarChart3, label: "Reports" },
+    { href: "/products", icon: Package, label: "Products" },
+    { href: "/inventory", icon: BarChart3, label: "Inventory" },
+    { href: "/finance", icon: TrendingUp, label: "Finance" },
+    { href: "/settings", icon: Settings, label: "Settings" },
 ];
 
 export default function Navbar() {
@@ -64,9 +70,26 @@ export default function Navbar() {
                     })}
                 </nav>
 
-                {/* Footer */}
-                <div className="px-6 py-5 border-t border-white/10">
-                    <p className="text-white/25 text-xs tracking-widest uppercase">Elite Retail Systems</p>
+                {/* Footer & Currency */}
+                <div className="px-6 py-5 border-t border-white/10 flex flex-col gap-4">
+                    <div className="flex items-center justify-between text-xs tracking-widest text-white/40">
+                        <span>CURRENCY</span>
+                        <div className="flex bg-white/5 rounded-sm p-0.5 border border-white/10">
+                            <button
+                                onClick={() => useUIStore.getState().setCurrency('PKR')}
+                                className={`px-2 py-1 transition-colors ${useUIStore.getState().currency === 'PKR' ? 'bg-white text-black' : 'hover:text-white'}`}
+                            >
+                                PKR
+                            </button>
+                            <button
+                                onClick={() => useUIStore.getState().setCurrency('USD')}
+                                className={`px-2 py-1 transition-colors ${useUIStore.getState().currency === 'USD' ? 'bg-white text-black' : 'hover:text-white'}`}
+                            >
+                                USD
+                            </button>
+                        </div>
+                    </div>
+                    <p className="text-white/25 text-[10px] tracking-widest uppercase">Elite Retail Systems</p>
                 </div>
             </aside>
 

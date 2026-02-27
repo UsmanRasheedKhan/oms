@@ -50,11 +50,51 @@ export interface Order {
 export interface Product {
     id?: string;
     name: string;
+    description?: string;
+    collectionId: string;
+    createdAt: string;
+    updatedAt: string;
+    isSoftDeleted?: boolean;
+    images?: { url: string; isPrimary: boolean }[];
+    variants?: Variant[];
+}
+
+export interface Variant {
+    id?: string;
+    productId?: string;
+    size: string;
+    color: string;
     sku: string;
-    price: number;
-    imageUrl?: string;
-    category?: string;
-    stock?: number;
+    barcodeUrl?: string; // from Firebase Storage
+    costPrice: number;
+    sellPrice: number;
+    quantity: number;
+    isSoftDeleted?: boolean;
+}
+
+export interface GlobalSize {
+    id?: string;
+    name: string;      // e.g., 'S', 'M', or '2x4'
+    description?: string;
+    isActive?: boolean;
+    isSoftDeleted?: boolean;
+}
+
+export interface Collection {
+    id?: string;
+    name: string;
+    description?: string;
+    isActive?: boolean;
+    isSoftDeleted?: boolean;
+}
+
+export interface LedgerEntry {
+    id?: string;
+    date: string;
+    type: 'cash_in' | 'cash_out' | 'inventory_adjustment';
+    amount: number;
+    description: string;
+    referenceId?: string; // Order ID or manually entered
 }
 
 export const STATUS_LABELS: Record<OrderStatus, string> = {
